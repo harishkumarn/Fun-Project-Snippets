@@ -1,0 +1,1 @@
+"use strict",$(document).ready(function(){var a=null;$(".social-share").hover(function(){clearTimeout(a),$(".social-share .social-btns").fadeIn()},function(){a=setTimeout(function(){$(".social-share .social-btns").fadeOut()},200)})});

@@ -1,0 +1,44 @@
+Object oriented paradigm mismmatch
+
+Granulrity
+Data navigation
+Identity
+Assiciation
+Sub - type : inheritance
+
+
+hiberante.cfg.xml
+
+*connection
+*database name
+*uname
+*pwd
+
+*sql dialect
+*logging
+*echo
+
+*mapping : class, resource
+
+**resource
+
+-> tablename.hbm.xml
+->meta, table, property(column) ,class, id,  generator
+
+Entity and Embedded
+
+@Entity
+@Id
+@Generate
+@Embeded
+@EmbeddedType
+
+@AttributeOverrides , @AttributeOverride
+
+FK:
+
+@ManyToOne
+@JoinColumn
+
+
+

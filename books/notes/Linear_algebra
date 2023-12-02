@@ -1,0 +1,68 @@
+Linear algebra by Prof. Gilbert Strang
+
+*)System of linear equations :
+-how to solve?
+-> By treating them(Rows) as equations of lines/planes for 2D/3D span. (Row method)
+-> By treating columns as matrices (Column method)
+
+*Row method : Intuition
+-> solution would be the intersection point of lines/planes
+*Column method : Intuition
+->solution would be obtained by vector scaling and addition. Else we can use elimination
+ Can I solve B for all X (AX=B). But, do all combinations of the columns fill the 3-D space (or N-D space). If yes, then possible. Means, A is a non-singular matrix, invertible matrix (i.e., |A|>0)
+
+
+To solve the equation
+
+
+*)Matrix elimination
+-why?
+->to solve the system of linear equation
+-How?
+->By getting the matrix to reduced row echelon form (upper or lower triangular matrix) we can solve the system of linear equations through back substitution
+
+*)Matrix inversion
+-> AA-1 = I. A matrix can have an inverse only if |A| >0 . Only then it is invertible
+->ways to multiply a matrix :
+
+1. let C=AB
+
+Cid = ∑i'th row of A*j'th column of B
+
+2. A Row * Matrix = a row
+3. Matrix * Column = a Column
+4. A column * a Row = 
+
+5. Block method : Divide matrices A,B into blocks of equals sizes. Then treat each block as an element of a matrix.
+
+-> let A, B be 2 4x4 matrices. Divide them into blocks of size 2x2. Let the blocks be A00,A01,A10, A11 and vice versa for B.
+
+Then C00 = A00*B00 + A01*B10
+
+
+-Matrix inversion methods:
+
+->Gauss-Jordan Elimination:
+
+Let A be,
+
+a b
+c d
+
+& I be
+
+1 0
+0 1
+
+
+Augmented Matrix is
+
+ a b 1 0 
+ c d 0 1
+
+Through  Gauss-Jordan Elimination, we get
+
+ 1 0 l m
+ 0 1 n o
+
+The matrix [[l,m],[n,o]] is the inverse matrix for the matrix A.
