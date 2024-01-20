@@ -33,12 +33,12 @@
 			const start = new Date().getTime();
 			position({degree:degreeMap[s_deg],display:s_deg},secondDial);
 			position({degree:degreeMap[m_deg] -  s_deg * 0.1,display: m_deg},minuteDial);
-			position({degree:degreeMap[h_deg ] -(  m_deg / 2) , display: h_deg/5} ,hourDial);
+			position({degree:degreeMap[h_deg ] -   m_deg / 2 , display: h_deg/5} ,hourDial);
 			setTimeout(function(){
 				s_deg += 1;
 				m_deg += (s_deg == 60 ? 1 : 0 );
 				h_deg += (m_deg == 60 ? 5 : 0)
-				loop(s_deg   % 60, m_deg  % 60 ,h_deg % 12);
+				loop(s_deg   % 60, m_deg  % 60 ,h_deg % 60);
 			},1000 - ( new Date().getTime() - start));
 		}
 		const degToRad = Math.PI / 180;
