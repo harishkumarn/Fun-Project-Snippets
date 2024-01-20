@@ -46,9 +46,9 @@
 			const {top,left}  = $('#center').offset();
 			let gap = 30;
 			let x  = Math.cos(degToRad * degreeMap.degree);
-			let y = -Math.sin(degToRad * degreeMap.degree);
+			let y = Math.sin(degToRad * degreeMap.degree);
 			dials.forEach( i => {
-				$(i).css({top: top + gap* y,left : left + gap * x });
+				$(i).css({top: top - gap * y,left : left + gap * x });
 				$(i).text(degreeMap.display );
 				gap += 30;
 			});
