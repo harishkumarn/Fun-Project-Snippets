@@ -1,0 +1,69 @@
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+	<style>
+		div{
+			position:absolute;
+		}
+		#center{
+			top:50%;
+			left :50%;
+		}
+	</style>
+	<script>
+		const degreeMap = {0:90,1:84,2:78,3:72,4:66,5:60,6:54,7:48,8:42,9:36,10:30,
+							11:24,12:18,13:12,14:6,15:0,16:354,17:348,18:342,19:336,20:330,
+							21:324,22:318,23:312,24:306,25:300,26:294,27:288,28:282,29:274,30:270,
+							31:264,32:258,33:252,34:246,35:240,36:234,37:228,38:222,39:216,40:210,
+							41:204,42:198,43:192,44:186,45:180,46:174,47:168,48:162,49:156,50:150,
+							51:144,52:138,53:132,54:126,55:120,56:114,57:108,58:102,59:96};
+
+		const secondDial  = [] ;
+		const minuteDial = [];
+		const hourDial= [];
+		function createElements(count, arr){
+			for(let i = 0 ; i < count ; i ++) {
+				let ele = document.createElement('div');
+				arr.push(ele)
+				document.body.append(ele);
+			}
+		}
+
+		function loop(s_deg,m_deg,h_deg){
+			const start = new Date().getTime();
+			position({degree:degreeMap[s_deg],display:s_deg},secondDial);
+			position({degree:degreeMap[m_deg] -  s_deg * 0.1,display: m_deg},minuteDial);
+			position({degree:degreeMap[h_deg ] -(  m_deg / 2) , display: h_deg/5} ,hourDial);
+			setTimeout(function(){
+				s_deg += 1;
+				m_deg += (s_deg == 60 ? 1 : 0 );
+				h_deg += (m_deg == 60 ? 5 : 0)
+				loop(s_deg   % 60, m_deg  % 60 ,h_deg % 12);
+			},1000 - ( new Date().getTime() - start));
+		}
+		const degToRad = Math.PI / 180;
+		function position(degreeMap, dials){
+			const {top,left}  = $('#center').offset();
+			let gap = 30;
+			let x  = Math.cos(degToRad * degreeMap.degree);
+			let y = -Math.sin(degToRad * degreeMap.degree);
+			dials.forEach( i => {
+				$(i).css({top: top + gap* y,left : left + gap * x });
+				$(i).text(degreeMap.display );
+				gap += 30;
+			});
+		}
+
+		$(function(){
+			createElements(12,secondDial);
+			createElements(8,minuteDial);
+			createElements(4,hourDial);
+			const date = new Date();
+			loop(date.getSeconds() , date.getMinutes() , (date.getHours() % 12)*5 );
+		});
+	</script>
+</head>
+<body>
+		<div id="center">0</div>
+</body>
+</html>
