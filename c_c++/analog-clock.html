@@ -21,10 +21,11 @@
 		const secondDial  = [] ;
 		const minuteDial = [];
 		const hourDial= [];
-		function createElements(count, arr){
+		function createElements(count, arr, colour){
 			for(let i = 0 ; i < count ; i ++) {
 				let ele = document.createElement('div');
-				arr.push(ele)
+				ele.style.color = colour;
+				arr.push(ele);
 				document.body.append(ele);
 			}
 		}
@@ -57,15 +58,15 @@
 		// minute hande moves 0.1 degrees / second
 		// hour handle moves 0.1 degrees / minute
 		$(function(){
-			createElements(12,secondDial);
-			createElements(8,minuteDial);
-			createElements(4,hourDial);
+			createElements(12,secondDial,'blue');
+			createElements(8,minuteDial,'green');
+			createElements(4,hourDial,'red');
 			const date = new Date();
 			loop(date.getSeconds() , date.getMinutes() , (date.getHours() % 12)*5 );
 		});
 	</script>
 </head>
 <body>
-		<div id="center">0</div>
+		<div id="center">O</div>
 </body>
 </html>
