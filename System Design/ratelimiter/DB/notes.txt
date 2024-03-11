@@ -1,0 +1,21 @@
+1 : Pull Cassandra image
+
+	docker image pull Cassandra:latest
+
+2 : Start container
+	
+	docker container run -p 9042:9042 --name cass cassandra
+
+3 : Create namespace and Table
+
+	docker exec -it cass cqlsh
+
+	# inside cql shell 
+
+	create keyspace TestDB1 with replication = {'class':'SimpleStrategy','replication_factor':1};
+
+	use TestDB1;
+
+	create table TestDB1.USER_DETAILS ( USER_ID UUID PRIMARY KEY, USER_NAME TEXT, EMAIL TEXT, AGE INT);
+
+	insert table USER_DETAILS ( USER_ID, USER_NAME , EMAIL, TEXT) 

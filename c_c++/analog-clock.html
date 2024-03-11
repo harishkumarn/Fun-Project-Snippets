@@ -29,7 +29,6 @@
 				document.body.append(ele);
 			}
 		}
-
 		function loop(s_deg,m_deg,h_deg){
 			const start = new Date().getTime();
 			position({degree:degreeMap[s_deg],display:s_deg},secondDial);
@@ -38,12 +37,13 @@
 			setTimeout(function(){
 				s_deg += 1;
 				m_deg += (s_deg == 60 ? 1 : 0 );
-				h_deg += (m_deg == 60 ? 5 : 0)
+				h_deg += (m_deg == 60 ? 5 : 0);
 				loop(s_deg   % 60, m_deg  % 60 ,h_deg % 60);
-			},1000 - ( new Date().getTime() - start));
+			},1000 - ( new Date().getTime() - start ) );
 		}
 		const degToRad = Math.PI / 180;
 		function position(degreeMap, dials){
+		
 			const {top,left}  = $('#center').offset();
 			let gap = 30;
 			let x  = Math.cos(degToRad * degreeMap.degree);
