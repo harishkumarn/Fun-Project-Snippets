@@ -81,7 +81,7 @@ public class Display extends JPanel{
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 if (pixels[x][y] == 1) {
-                    g.setColor(Color.GREEN);
+                    g.setColor(Color.WHITE);
                 } else {
                     g.setColor(Color.BLACK);
                 }
