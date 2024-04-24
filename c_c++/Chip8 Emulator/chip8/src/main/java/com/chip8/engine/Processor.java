@@ -38,19 +38,19 @@ public class Processor{
 
         Processor chip8 = new Processor();
         chip8.display.initSpriteData(chip8);
-        //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Pong_1p.ch8");
-         //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Animal_Race.ch8");
+        RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Pong_1p.ch8");
+       //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Animal_Race.ch8");
         // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/15_Puzzle.ch8");
        //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Astro_Dodge.ch8");
         //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Kaleidoscope.ch8");
-       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Rocket.ch8"); 
-        // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tron.ch8");??
-        RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/UFO.ch8");// 
+      //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Rocket.ch8"); 
+       //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tron.ch8");
+       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/UFO.ch8");// 
        // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Vertical_Brix.ch8");??
       // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Wipe_Off.ch8");
-     // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tetris.ch8");??
+    //  RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Tetris.ch8");??
    // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/IBM Logo.ch8");
-    //RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Clock Program.ch8");
+   // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Clock Program.ch8");
   // RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Life.ch8");
  //    RomReader rr = new RomReader("/Users/harish-8433/Downloads/Roms/Chip8_logoo.ch8");
         chip8.programEnd = rr.initMemory(chip8);
@@ -78,7 +78,7 @@ public class Processor{
             }
            // System.out.printf("0x%03X 0x%04X\n", programCounter, (memory[programCounter] << 8) | memory[programCounter+ 1]);
            // Uncomment the line below to dissamble byte code
-           // System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
+          //  System.out.printf("0x%03X %s\n",programCounter,asm.getAsmFromByteCode(bh,bl));
             switch (bh & 0xF0) {
                 case 0x00:
                     switch (bl & 0xFF) {
@@ -121,38 +121,38 @@ public class Processor{
                             registers[bh & 0x0F] = registers[bl >> 4];
                         break;
                         case 0x01:
-                            registers[bh & 0x0F] = (byte) (registers[bh & 0x0F] | registers[bl >> 4]);
+                            registers[bh & 0x0F] =  (registers[bh & 0x0F] | registers[bl >> 4]);
                         break;
                         case 0x02:
-                            registers[bh & 0x0F] = (byte) (registers[bh & 0x0F] & registers[bl >> 4]);
+                            registers[bh & 0x0F] =  (registers[bh & 0x0F] & registers[bl >> 4]);
                         break;
                         case 0x03:
-                            registers[bh & 0x0F] = (byte) (registers[bh & 0x0F] ^ registers[bl >> 4]);
+                            registers[bh & 0x0F] = (registers[bh & 0x0F] ^ registers[bl >> 4]);
                         break;
                         case 0x04:
                             val = registers[bh & 0x0F] + registers[bl >> 4];
-                            registers[0xF] = (byte) (val > 255 ? 0x1 : 0x0);
-                            registers[bh & 0x0F] = (byte) (val & 0xFF);
+                            registers[0xF] = (val > 255 ? 0x1 : 0x0);
+                            registers[bh & 0x0F] = (val & 0xFF);
                         break;
                         case 0x05:
                             val = registers[bh & 0x0F] - registers[bl >> 4];
-                            registers[0xF] = (byte) (val < 0 ? 0x0 : 0x1);
-                            registers[bh & 0x0F] = (byte) (val & 0xFF);
+                            registers[0xF] =  (val < 0 ? 0x0 : 0x1);
+                            registers[bh & 0x0F] =  (val & 0xFF);
                         break;
                         case 0x06:
                             val = registers[bl >> 4] >> 1;
-                            registers[0xF] = (byte) (registers[bl  >> 4] & 0x1);
-                            registers[bh & 0x0F] = (byte) val;
+                            registers[0xF] =  (registers[bl  >> 4] & 0x1);
+                            registers[bh & 0x0F] = val;
                         break;
                         case 0x07:
                             val =  registers[bl >> 4] - registers[bh & 0x0F];
-                            registers[0xF] = (byte) (val < 0 ? 0x0 : 0x1);
-                            registers[bh & 0x0F] = (byte) (val & 0xFF);
+                            registers[0xF] = (val < 0 ? 0x0 : 0x1);
+                            registers[bh & 0x0F] =  (val & 0xFF);
                         break;
                         case 0x0E:
                             val = registers[bl >> 4] << 1;
-                            registers[0xF] =(byte)((registers[bl >> 4] & 0x80) == 0x80  ? 1 : 0);
-                            registers[bh & 0x0F] = (byte) (val & 0xFF) ;
+                            registers[0xF] =((registers[bl >> 4] & 0x80) == 0x80  ? 1 : 0);
+                            registers[bh & 0x0F] =  (val & 0xFF) ;
                         break;
                     }
                 break;
@@ -167,7 +167,7 @@ public class Processor{
                     incPc = false;
                 break;
                 case 0xC0:
-                    registers[bh & 0x0F] = (byte) (random.nextInt(256) & bl);
+                    registers[bh & 0x0F] = (random.nextInt(256) & bl);
                 break;
                 case 0xD0:
                 int[] bytes = new int[bl & 0xf];
@@ -209,11 +209,11 @@ public class Processor{
                         break;
                     case 0x33:
                         val =  registers[bh & 0x0F];
-                        memory[indexRegister + 2] = (byte) (val % 10);
+                        memory[indexRegister + 2] =  (val % 10);
                         val /= 10;
-                        memory[indexRegister + 1] = (byte) (val % 10);
+                        memory[indexRegister + 1] = (val % 10);
                         val /= 10;
-                        memory[indexRegister] = (byte) (val % 10);
+                        memory[indexRegister] = (val % 10);
                         break;
                     case 0x55:
                         x = (bh & 0x0F);
@@ -234,9 +234,14 @@ public class Processor{
                 default:
                 break;
             }
+            // StringBuilder regState = new StringBuilder();
+            // for(int i = 0 ;i < 16;++i){
+            //     regState.append(registers[i]).append(" ");
+            // }
+            // System.out.println(regState);
             if(incPc) programCounter += 2;
             Thread.sleep(16, 666666);// 16.666666 ms delay equates to 60 cycles / minutes. Chip8's CPU speed is 60 Hz.
-            //Thread.sleep(1, 666666);
+           // Thread.sleep(1, 666666);
         }
     }
 }
