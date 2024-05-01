@@ -28,11 +28,11 @@ public class Bus {
     /**
      * RAM write
      * @param address
-     * @param value
+     * @param i
      * @return
      */
-    public boolean cpuWrite(int address, byte value){
-        ram.write(address, value);
+    public boolean cpuWrite(int address, byte i){
+        ram.write(address, i);
         return true;
     }
 
