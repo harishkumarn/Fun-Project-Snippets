@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.nes8.components.CPU;
 import com.nes8.components.CPU.Flag;
 
+// It can disassemble byte code as well
 public class Opcodes {
     HashMap<Integer, Opcode> opcodes  = new HashMap<Integer, Opcode>();
 
@@ -35,7 +36,7 @@ public class Opcodes {
 
     private void initOpcodes(){
         // ADC
-        opcodes.put(0x69, new Opcode((byte)2,(byte)2, cpu){
+        opcodes.put(0x69, new Opcode((byte)2, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -46,7 +47,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x65, new Opcode((byte)2,(byte)3, cpu){
+        opcodes.put(0x65, new Opcode((byte)3, cpu){
             // Zero page
             @Override
             public byte execute(){
@@ -58,7 +59,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x75,new Opcode((byte)2,(byte)4, cpu){
+        opcodes.put(0x75,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -69,7 +70,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x6D,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x6D,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -81,7 +82,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x7D,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x7D,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -93,7 +94,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x79,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x79,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -105,7 +106,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x61,new Opcode((byte)2,(byte)6, cpu){
+        opcodes.put(0x61,new Opcode((byte)6, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -117,7 +118,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x71,new Opcode((byte)2,(byte)5, cpu){
+        opcodes.put(0x71,new Opcode((byte)5, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -133,7 +134,7 @@ public class Opcodes {
         //--------------------------------------
         //AND
 
-        opcodes.put(0x29, new Opcode((byte)2,(byte)2, cpu){
+        opcodes.put(0x29, new Opcode((byte)2, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -144,7 +145,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x25, new Opcode((byte)2,(byte)3, cpu){
+        opcodes.put(0x25, new Opcode((byte)3, cpu){
             // Zero page
             @Override
             public byte execute(){
@@ -156,7 +157,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x35,new Opcode((byte)2,(byte)4, cpu){
+        opcodes.put(0x35,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -167,7 +168,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x2D,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x2D,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -179,7 +180,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x3D,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x3D,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -191,7 +192,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x39,new Opcode((byte)3,(byte)4, cpu){
+        opcodes.put(0x39,new Opcode((byte)4, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -203,7 +204,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x21,new Opcode((byte)2,(byte)6, cpu){
+        opcodes.put(0x21,new Opcode((byte)6, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -215,7 +216,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x31,new Opcode((byte)2,(byte)5, cpu){
+        opcodes.put(0x31,new Opcode((byte)5, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -231,7 +232,7 @@ public class Opcodes {
         //--------------------------------
         //ASL
 
-        opcodes.put(0x0A, new Opcode((byte)1,(byte)2, cpu){
+        opcodes.put(0x0A, new Opcode((byte)2, cpu){
             @Override
             public byte execute(){
                 cpu.accumulator <<= 1;
@@ -242,7 +243,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x06, new Opcode((byte)2,(byte)5, cpu){
+        opcodes.put(0x06, new Opcode((byte)5, cpu){
             // Zero page
             @Override
             public byte execute(){
@@ -254,7 +255,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x16,new Opcode((byte)2,(byte)6, cpu){
+        opcodes.put(0x16,new Opcode((byte)6, cpu){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -265,7 +266,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x0E,new Opcode((byte)3,(byte)6, cpu){
+        opcodes.put(0x0E,new Opcode((byte)6, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -277,7 +278,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x1E,new Opcode((byte)3,(byte)7, cpu){
+        opcodes.put(0x1E,new Opcode((byte)7, cpu){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
@@ -289,6 +290,10 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
+
+        //-----------------------------------
+
+
     }
 
 }

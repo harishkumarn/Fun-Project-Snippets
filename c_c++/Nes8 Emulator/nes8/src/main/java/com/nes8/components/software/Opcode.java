@@ -4,10 +4,9 @@ import com.nes8.components.CPU;
 
 
 public class Opcode {
-    byte bytes, cycle;
+    byte  cycle;
     CPU cpu ;
-    public Opcode(byte bytes, byte cycle, CPU cpu){
-        this.bytes = bytes;
+    public Opcode( byte cycle, CPU cpu){
         this.cycle = cycle;
         this.cpu = cpu;
     }
