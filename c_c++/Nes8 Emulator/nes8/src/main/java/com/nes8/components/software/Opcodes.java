@@ -131,7 +131,7 @@ public class Opcodes {
             }
         });
 
-        //--------------------------------------
+        //-----------------------------------
         //AND
 
         opcodes.put(0x29, new Opcode((byte)2, cpu){
@@ -229,7 +229,7 @@ public class Opcodes {
             }
         });
 
-        //--------------------------------
+        //-----------------------------------
         //ASL
 
         opcodes.put(0x0A, new Opcode((byte)2, cpu){
@@ -292,7 +292,194 @@ public class Opcodes {
         });
 
         //-----------------------------------
+        //BCC
 
+        opcodes.put(0x90,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.C) == 0 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BCC "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BCS
+        opcodes.put(0xB0,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.C) == 1 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BCS "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BCZ
+        opcodes.put(0xF0,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.Z) == 1 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BEQ "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+
+        //-----------------------------------
+        //BMI
+        opcodes.put(0x30,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.N) == 1 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BMI "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BNE
+        opcodes.put(0xD0,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.Z) == 0 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BNE "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BPL
+        opcodes.put(0x10,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.N) == 0 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BPL "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BVC
+        opcodes.put(0x50,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.V) == 0 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BVC "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BVS
+        opcodes.put(0x70,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                if(cpu.getFlag(Flag.V) == 1 ){
+                    cpu.programCounter = operand;
+                }
+                System.out.println("BVS "+ Integer.toHexString(operand) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CLC
+        opcodes.put(0x18,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                cpu.updateFlag(Flag.C, false);
+                System.out.println("CLC" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CLD
+        opcodes.put(0xD8,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                cpu.updateFlag(Flag.D, false);
+                System.out.println("CLD" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CLI
+        opcodes.put(0x58,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                cpu.updateFlag(Flag.I, false);
+                System.out.println("CLI" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CLV
+        opcodes.put(0xB8,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                cpu.updateFlag(Flag.V, false);
+                System.out.println("CLV" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BRC
+        opcodes.put(0x00,new Opcode((byte)2, cpu){
+            @Override
+            public byte execute(){
+                // IMPLEMENT
+                // IRQ
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BIT
+        opcodes.put(0x24,new Opcode((byte)3, cpu){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                // IMPLEMENT
+                return (byte)cycle;
+            }
+        });
+
+        opcodes.put(0x2C,new Opcode((byte)4, cpu){
+            @Override
+            public byte execute(){
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                // IMPLEMENT
+                return (byte)cycle;
+            }
+        });
 
     }
 
