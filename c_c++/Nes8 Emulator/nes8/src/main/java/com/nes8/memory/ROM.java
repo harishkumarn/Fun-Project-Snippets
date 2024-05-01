@@ -7,13 +7,10 @@ import java.io.IOException;
 
 public class ROM {
 
-    public static void main(String[] args) throws IOException{
-        new ROM("/Users/harish-8433/Downloads/64-in-1 (J) [p1].nes").initROM();
-    }
 
     public enum NameTableArrangeMent{
         HORIZONTAL, // 32x60 -> Games with vertical scroll
-        VERTICAL // 64 x 30 -> Games with horizontal scroll
+        VERTICAL // 64x30 -> Games with horizontal scroll
     }
 
     byte[] pgr_ROM , chr_ROM ;
@@ -28,6 +25,7 @@ public class ROM {
     } 
 
     public void initROM() throws IOException{
+        System.out.println("\n");
         try{
             byte[] header = new byte[16];
             br.read(header);
@@ -62,6 +60,7 @@ public class ROM {
         }finally{
             br.close();
         }
+        System.out.println("\n");
     }
 
     void setMapper(int mapper){
@@ -102,7 +101,7 @@ public class ROM {
             case 185:
             break;
             default:
-                System.out.println("Unknown mapper found!!");
+                System.out.println("Unknown mapper!!");
             break;
         }
     }
