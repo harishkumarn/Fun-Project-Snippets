@@ -486,9 +486,14 @@ public class Opcodes {
             public byte execute(){
                 // IMPLEMENT
                 // IRQ
-                cpu.stack.push(cpu.programCounter + 2);
-                cpu.stack.push(cpu.statusRegister +  0);
+                cpu.programCounter ++;
+                cpu.stack.push((cpu.programCounter >> 8 ) & 0xFF);
+                cpu.stack.push(cpu.programCounter  & 0xFF);
                 cpu.updateFlag(Flag.I, true);
+                cpu.stack.push(cpu.statusRegister +  0);
+                cpu.updateFlag(Flag.I, false);// ?? is this needed
+
+                cpu.programCounter = (short)((cpu.bus.cpuRead(0xFFFF) << 8 ) | (cpu.bus.cpuRead(0xFFFE)));
                 System.out.println("BRK" );
                 return (byte)cycle;
             }
