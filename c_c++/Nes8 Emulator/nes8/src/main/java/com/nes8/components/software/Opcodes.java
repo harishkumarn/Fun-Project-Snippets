@@ -25,13 +25,19 @@ public class Opcodes {
 
     private void updateANDFlags(int val){
         cpu.updateFlag(Flag.Z, (val & 0xFF) == 0);
-        cpu.updateFlag(Flag.N, (val & 0x80) > 0 );
+        cpu.updateFlag(Flag.N, val < 0 );
     }
 
     private void updateASLFlags(int val){
-        cpu.updateFlag(Flag.C, val > 255);
+        cpu.updateFlag(Flag.C, (val & 0xFF00 )> 0);
         cpu.updateFlag(Flag.Z, (val & 0xFF) == 0);
-        cpu.updateFlag(Flag.N, (val & 0x80) > 0 );
+        cpu.updateFlag(Flag.N, val < 0 );
+    }
+
+    private void updateCMPFlags(int val){
+        cpu.updateFlag(Flag.C, val >= 0);
+        cpu.updateFlag(Flag.Z, (val & 0xFF) == 0);
+        cpu.updateFlag(Flag.N, val < 0 );
     }
 
     private void initOpcodes(){
@@ -528,6 +534,170 @@ public class Opcodes {
             }
         });
 
+         //-----------------------------------
+         //CMP
+
+         opcodes.put(0xC9, new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - operand ;
+                updateCMPFlags(temp);
+                System.out.println("CMP #"+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xC5, new Opcode((byte)3){
+            // Zero page
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - cpu.bus.cpuRead(operand) ;
+                updateCMPFlags(temp);
+                System.out.println("CMP "+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xD5,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - cpu.bus.cpuRead(operand + cpu.indexX) ;
+                updateCMPFlags(temp);
+                System.out.println("CMP "+ Integer.toHexString(operand) + " ,X");
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xCD,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - cpu.bus.cpuRead( (operand2 << 8 ) + operand1) ;
+                updateCMPFlags(temp);
+                System.out.println("CMP "+ Integer.toHexString((operand2 << 8 ) + operand1) );
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xDD,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexX) ;
+                updateCMPFlags(temp);
+                System.out.println("CMP "+ Integer.toHexString((operand1 << 8 ) + operand2) + " ,X" );
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xD9,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.accumulator - cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexY) ;
+                updateCMPFlags(temp);
+                System.out.println("CMP "+ Integer.toHexString((operand1 << 8 ) + operand2) + " ,Y" );
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xC1,new Opcode((byte)6){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int address = (cpu.bus.cpuRead(operand + 1) << 8 )  + cpu.bus.cpuRead(operand );
+                int temp = cpu.accumulator - cpu.bus.cpuRead(address );
+                updateCMPFlags(temp);
+                System.out.println("CMP ("+ Integer.toHexString(operand) + " ,X)" );
+                return (byte)cycle;
+            }
+        });
+        opcodes.put(0xD1,new Opcode((byte)5){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int address = (cpu.bus.cpuRead(operand + 1) << 8 )  + cpu.bus.cpuRead(operand ) +  cpu.indexY;
+                int temp = cpu.accumulator - cpu.bus.cpuRead(address );
+                updateCMPFlags(temp);
+                System.out.println("CMP ("+ Integer.toHexString(operand) + ") ,Y" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CPX
+        opcodes.put(0xE0, new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexX - operand ;
+                updateCMPFlags(temp);
+                System.out.println("CPX #"+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+
+        opcodes.put(0xE4, new Opcode((byte)3){
+            // Zero page
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexX - cpu.bus.cpuRead(operand) ;
+                updateCMPFlags(temp);
+                System.out.println("CPX "+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+
+        opcodes.put(0xEC,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexX - cpu.bus.cpuRead( (operand2 << 8 ) + operand1) ;
+                updateCMPFlags(temp);
+                System.out.println("CPX "+ Integer.toHexString((operand2 << 8 ) + operand1) );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //CPY
+
+        opcodes.put(0xC0, new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexY - operand ;
+                updateCMPFlags(temp);
+                System.out.println("CPY #"+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+
+        opcodes.put(0xC4, new Opcode((byte)3){
+            // Zero page
+            @Override
+            public byte execute(){
+                byte operand = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexY - cpu.bus.cpuRead(operand) ;
+                updateCMPFlags(temp);
+                System.out.println("CPY "+ Integer.toHexString(operand));
+                return (byte)cycle;
+            }
+        });
+
+        opcodes.put(0xCC,new Opcode((byte)4){
+            @Override
+            public byte execute(){
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                int temp = cpu.indexY - cpu.bus.cpuRead( (operand2 << 8 ) + operand1) ;
+                updateCMPFlags(temp);
+                System.out.println("CPY "+ Integer.toHexString((operand2 << 8 ) + operand1) );
+                return (byte)cycle;
+            }
+        });
     }
 
 }
