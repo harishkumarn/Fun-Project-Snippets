@@ -698,6 +698,16 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
+
+        //-----------------------------------
+        //NOP
+        opcodes.put(0xEA,new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                System.out.println("NOP");
+                return (byte)cycle;
+            }
+        });
     }
 
 }
