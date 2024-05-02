@@ -36,7 +36,7 @@ public class Opcodes {
 
     private void initOpcodes(){
         // ADC
-        opcodes.put(0x69, new Opcode((byte)2, cpu){
+        opcodes.put(0x69, new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -47,7 +47,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x65, new Opcode((byte)3, cpu){
+        opcodes.put(0x65, new Opcode((byte)3){
             // Zero page
             @Override
             public byte execute(){
@@ -59,7 +59,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x75,new Opcode((byte)4, cpu){
+        opcodes.put(0x75,new Opcode((byte)4){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -70,23 +70,23 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x6D,new Opcode((byte)4, cpu){
+        opcodes.put(0x6D,new Opcode((byte)4){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
-                int temp = cpu.accumulator + cpu.bus.cpuRead( (operand1 << 8 ) + operand2) +  cpu.getFlag(Flag.C);
-                updateADCFlags(cpu.accumulator,cpu.bus.cpuRead( (operand1 << 8 ) + operand2) , cpu.getFlag(Flag.C));
+                int temp = cpu.accumulator + cpu.bus.cpuRead( (operand2 << 8 ) + operand1) +  cpu.getFlag(Flag.C);
+                updateADCFlags(cpu.accumulator,cpu.bus.cpuRead( (operand2 << 8 ) + operand1) , cpu.getFlag(Flag.C));
                 cpu.accumulator = (byte)(temp & 0xFF);
-                System.out.println("ADC "+ Integer.toHexString((operand1 << 8 ) + operand2) );
+                System.out.println("ADC "+ Integer.toHexString((operand2 << 8 ) + operand1) );
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x7D,new Opcode((byte)4, cpu){
+        opcodes.put(0x7D,new Opcode((byte)4){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.accumulator + cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexX) +  cpu.getFlag(Flag.C);
                 updateADCFlags(cpu.accumulator, cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexX), cpu.getFlag(Flag.C));
                 cpu.accumulator = (byte)(temp & 0xFF);
@@ -94,11 +94,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x79,new Opcode((byte)4, cpu){
+        opcodes.put(0x79,new Opcode((byte)4){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.accumulator + cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexY) +  cpu.getFlag(Flag.C);
                 updateADCFlags(cpu.accumulator,cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexY)  , cpu.getFlag(Flag.C));
                 cpu.accumulator = (byte)(temp & 0xFF);
@@ -106,7 +106,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x61,new Opcode((byte)6, cpu){
+        opcodes.put(0x61,new Opcode((byte)6){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -118,7 +118,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x71,new Opcode((byte)5, cpu){
+        opcodes.put(0x71,new Opcode((byte)5){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -134,7 +134,7 @@ public class Opcodes {
         //-----------------------------------
         //AND
 
-        opcodes.put(0x29, new Opcode((byte)2, cpu){
+        opcodes.put(0x29, new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -145,7 +145,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x25, new Opcode((byte)3, cpu){
+        opcodes.put(0x25, new Opcode((byte)3){
             // Zero page
             @Override
             public byte execute(){
@@ -157,7 +157,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x35,new Opcode((byte)4, cpu){
+        opcodes.put(0x35,new Opcode((byte)4){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -168,11 +168,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x2D,new Opcode((byte)4, cpu){
+        opcodes.put(0x2D,new Opcode((byte)4){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.accumulator & cpu.bus.cpuRead( (operand1 << 8 ) + operand2) ;
                 updateANDFlags(temp);
                 cpu.accumulator = (byte)(temp & 0xFF);
@@ -180,11 +180,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x3D,new Opcode((byte)4, cpu){
+        opcodes.put(0x3D,new Opcode((byte)4){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.accumulator & cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexX) ;
                 updateANDFlags(temp);
                 cpu.accumulator = (byte)(temp & 0xFF);
@@ -192,11 +192,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x39,new Opcode((byte)4, cpu){
+        opcodes.put(0x39,new Opcode((byte)4){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.accumulator & cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexY) ;
                 updateANDFlags(temp);
                 cpu.accumulator = (byte)(temp & 0xFF);
@@ -204,7 +204,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x21,new Opcode((byte)6, cpu){
+        opcodes.put(0x21,new Opcode((byte)6){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -216,7 +216,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x31,new Opcode((byte)5, cpu){
+        opcodes.put(0x31,new Opcode((byte)5){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -232,7 +232,7 @@ public class Opcodes {
         //-----------------------------------
         //ASL
 
-        opcodes.put(0x0A, new Opcode((byte)2, cpu){
+        opcodes.put(0x0A, new Opcode((byte)2){
             @Override
             public byte execute(){
                 cpu.accumulator <<= 1;
@@ -243,7 +243,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x06, new Opcode((byte)5, cpu){
+        opcodes.put(0x06, new Opcode((byte)5){
             // Zero page
             @Override
             public byte execute(){
@@ -255,7 +255,7 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x16,new Opcode((byte)6, cpu){
+        opcodes.put(0x16,new Opcode((byte)6){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -266,11 +266,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x0E,new Opcode((byte)6, cpu){
+        opcodes.put(0x0E,new Opcode((byte)6){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp =  cpu.bus.cpuRead( (operand1 << 8 ) + operand2) << 1;
                 updateASLFlags(temp);
                 cpu.bus.cpuWrite((operand1 << 8 ) + operand2, (byte)(temp & 0xFF));
@@ -278,11 +278,11 @@ public class Opcodes {
                 return (byte)cycle;
             }
         });
-        opcodes.put(0x1E,new Opcode((byte)7, cpu){
+        opcodes.put(0x1E,new Opcode((byte)7){
             @Override
             public byte execute(){
-                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
+                byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 int temp = cpu.bus.cpuRead( (operand1 << 8 ) + operand2 + cpu.indexX) << 1;
                 updateASLFlags(temp);
                 cpu.bus.cpuWrite((operand1 << 8 ) + operand2 + cpu.indexX, (byte)(temp & 0xFF));
@@ -294,7 +294,7 @@ public class Opcodes {
         //-----------------------------------
         //BCC
 
-        opcodes.put(0x90,new Opcode((byte)2, cpu){
+        opcodes.put(0x90,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -308,7 +308,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BCS
-        opcodes.put(0xB0,new Opcode((byte)2, cpu){
+        opcodes.put(0xB0,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -322,7 +322,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BCZ
-        opcodes.put(0xF0,new Opcode((byte)2, cpu){
+        opcodes.put(0xF0,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -337,7 +337,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BMI
-        opcodes.put(0x30,new Opcode((byte)2, cpu){
+        opcodes.put(0x30,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -351,7 +351,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BNE
-        opcodes.put(0xD0,new Opcode((byte)2, cpu){
+        opcodes.put(0xD0,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -365,7 +365,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BPL
-        opcodes.put(0x10,new Opcode((byte)2, cpu){
+        opcodes.put(0x10,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -379,7 +379,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BVC
-        opcodes.put(0x50,new Opcode((byte)2, cpu){
+        opcodes.put(0x50,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -393,7 +393,7 @@ public class Opcodes {
 
         //-----------------------------------
         //BVS
-        opcodes.put(0x70,new Opcode((byte)2, cpu){
+        opcodes.put(0x70,new Opcode((byte)2){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
@@ -407,7 +407,7 @@ public class Opcodes {
 
         //-----------------------------------
         //CLC
-        opcodes.put(0x18,new Opcode((byte)2, cpu){
+        opcodes.put(0x18,new Opcode((byte)2){
             @Override
             public byte execute(){
                 cpu.updateFlag(Flag.C, false);
@@ -418,7 +418,7 @@ public class Opcodes {
 
         //-----------------------------------
         //CLD
-        opcodes.put(0xD8,new Opcode((byte)2, cpu){
+        opcodes.put(0xD8,new Opcode((byte)2){
             @Override
             public byte execute(){
                 cpu.updateFlag(Flag.D, false);
@@ -429,7 +429,7 @@ public class Opcodes {
 
         //-----------------------------------
         //CLI
-        opcodes.put(0x58,new Opcode((byte)2, cpu){
+        opcodes.put(0x58,new Opcode((byte)2){
             @Override
             public byte execute(){
                 cpu.updateFlag(Flag.I, false);
@@ -440,7 +440,7 @@ public class Opcodes {
 
         //-----------------------------------
         //CLV
-        opcodes.put(0xB8,new Opcode((byte)2, cpu){
+        opcodes.put(0xB8,new Opcode((byte)2){
             @Override
             public byte execute(){
                 cpu.updateFlag(Flag.V, false);
@@ -450,33 +450,75 @@ public class Opcodes {
         });
 
         //-----------------------------------
-        //BRC
-        opcodes.put(0x00,new Opcode((byte)2, cpu){
+        //INX
+        opcodes.put(0xE8,new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                int val = cpu.indexX + 1;
+                cpu.updateFlag(Flag.Z, (val & 0xFF) == 0);
+                cpu.updateFlag(Flag.N, (val & 0x80) > 0);
+                cpu.indexX = (byte)(val & 0xFF);
+                System.out.println("INX" );
+                return (byte)cycle;
+            }
+        });
+
+
+        //-----------------------------------
+        //INY
+
+        opcodes.put(0xC8,new Opcode((byte)2){
+            @Override
+            public byte execute(){
+                int val = cpu.indexY + 1;
+                cpu.updateFlag(Flag.Z, (val & 0xFF) == 0);
+                cpu.updateFlag(Flag.N, (val & 0x80) > 0);
+                cpu.indexY = (byte)(val & 0xFF);
+                System.out.println("INY" );
+                return (byte)cycle;
+            }
+        });
+
+        //-----------------------------------
+        //BRK
+        opcodes.put(0x00,new Opcode((byte)7){
             @Override
             public byte execute(){
                 // IMPLEMENT
                 // IRQ
+                cpu.stack.push(cpu.programCounter + 2);
+                cpu.stack.push(cpu.statusRegister +  0);
+                cpu.updateFlag(Flag.I, true);
+                System.out.println("BRK" );
                 return (byte)cycle;
             }
         });
 
         //-----------------------------------
         //BIT
-        opcodes.put(0x24,new Opcode((byte)3, cpu){
+        opcodes.put(0x24,new Opcode((byte)3){
             @Override
             public byte execute(){
                 byte operand = cpu.bus.getByteCode(cpu.programCounter++);
-                // IMPLEMENT
+                byte m = cpu.bus.cpuRead(operand);
+                cpu.updateFlag(Flag.N, ( m & 0x80) > 0 );
+                cpu.updateFlag(Flag.V, ( m & 0x40) > 0);
+                cpu.updateFlag(Flag.Z, ( (cpu.accumulator & m ) & 0xFF )  == 0);
+                System.out.println("BIT " + Integer.toHexString(operand) );
                 return (byte)cycle;
             }
         });
 
-        opcodes.put(0x2C,new Opcode((byte)4, cpu){
+        opcodes.put(0x2C,new Opcode((byte)4){
             @Override
             public byte execute(){
                 byte operand1 = cpu.bus.getByteCode(cpu.programCounter++);
                 byte operand2 = cpu.bus.getByteCode(cpu.programCounter++);
-                // IMPLEMENT
+                byte m = cpu.bus.cpuRead((operand2 << 8) + operand1);
+                cpu.updateFlag(Flag.N, ( m & 0x80) > 0 );
+                cpu.updateFlag(Flag.V, ( m & 0x40) > 0);
+                cpu.updateFlag(Flag.Z, ( (cpu.accumulator & m ) & 0xFF )  == 0);
+                System.out.println("BIT " + Integer.toHexString((operand2 << 8) + operand1) );
                 return (byte)cycle;
             }
         });
